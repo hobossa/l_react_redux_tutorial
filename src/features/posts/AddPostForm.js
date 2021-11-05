@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useAddNewPostMutation } from "../api/apiSlice";
 import { selectAllUsers } from "../users/usersSlice";
+import { useSelector } from "react-redux";
 
 export function AddPostForm() {
     const [title, setTitle] = useState('');
