@@ -1,5 +1,5 @@
 
-# This project has been created using [the official Redux template for Create-React-App](https://github.com/reduxjs/cra-template-redux)
+# This project originally clone from https://github.com/reduxjs/redux-essentials-example-app
 ###
 # Redux Essentials Tutorial Example
 
