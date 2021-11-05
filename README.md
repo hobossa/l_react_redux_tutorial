@@ -1,3 +1,6 @@
+
+# This project has been created using [the official Redux template for Create-React-App](https://github.com/reduxjs/cra-template-redux)
+###
 # Redux Essentials Tutorial Example
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
