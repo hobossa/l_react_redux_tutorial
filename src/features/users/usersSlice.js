@@ -1,7 +1,15 @@
 import { createSlice, createSelector, createAsyncThunk, createEntityAdapter } from "@reduxjs/toolkit";
-import { client } from "../../api/client";
 import { apiSlice } from "../api/apiSlice";
 
+export const extendedApiSlice = apiSlice.injectEndpoints({
+    endpoints: builder => ({
+        getUsers: builder.query({
+            query: () => '/users'
+        })
+    })
+})
+
+export const { useGetUsersQuery } = extendedApiSlice;
 
 // const usersAdapter = createEntityAdapter();
 
@@ -15,7 +23,14 @@ import { apiSlice } from "../api/apiSlice";
 // the query result object for a query with those parameters.
 // To generate a selector for a specific query argument, call `select(theQueryArg)`.
 // In this case, the users query has no params, so we don't pass anything to select()
-export const selectUsersResult = apiSlice.endpoints.getUsers.select()
+
+// here apiSlice and extendedApiSlice are the same object.
+// but it can be helpful to refer to the extendedApiSlice 
+// object instead of apiSlice here as a reminder to ourselves. 
+// (This is more important if you're using TypeScript, 
+// because only the extendedApiSlice value has the added types 
+// for the new endpoints.)
+export const selectUsersResult = extendedApiSlice.endpoints.getUsers.select()
 
 const emptyUsers = []
 
@@ -26,7 +41,7 @@ export const selectAllUsers = createSelector(
 
 export const selectUserById = createSelector(
     [selectAllUsers,
-    (state, userId) => userId],
+        (state, userId) => userId],
     (users, userId) => users.find(user => user.id === userId)
 )
 

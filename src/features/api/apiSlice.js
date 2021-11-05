@@ -39,9 +39,10 @@ export const apiSlice = createApi({
             }),
             invalidatesTags: (result, error, arg) => [{ type: 'Post', id: arg.id }]
         }),
-        getUsers: builder.query({
-            query: () => '/users',
-        }),
+        // remove into usersSlice.js, and then inject it back.
+        // getUsers: builder.query({
+        //     query: () => '/users',
+        // }),
     }),
 });
 

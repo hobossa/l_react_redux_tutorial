@@ -8,7 +8,7 @@ import { Provider } from 'react-redux'
 import { worker } from './api/server'
 import { fetchUsers } from './features/users/usersSlice'
 
-import { apiSlice } from './features/api/apiSlice'
+import {extendedApiSlice} from './features/users/usersSlice'
 
 // Start our mock API server
 worker.start({ onUnhandledRequest: 'bypass' })
@@ -21,7 +21,7 @@ worker.start({ onUnhandledRequest: 'bypass' })
 // but it's then up to you to unsubscribe from that data later - otherwise the 
 // data stays in the cache permanently. In this case, we always need user data, 
 // so we can skip unsubscribing.
-store.dispatch(apiSlice.endpoints.getUsers.initiate());
+store.dispatch(extendedApiSlice.endpoints.getUsers.initiate());
 
 ReactDOM.render(
   <React.StrictMode>
