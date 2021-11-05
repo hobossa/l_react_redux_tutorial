@@ -12,10 +12,13 @@ export const apiSlice = createApi({
         getPosts: builder.query({
             // The URL for the request is '/fakeApi/posts'
             query: () => '/posts'
-        })
+        }),
+        getPost: builder.query({
+            query: (postId) => `/posts/${postId}`
+        }),
     }),
 });
 
 
 // Export the auto-generated hook for the 'getPost' query endpoint
-export const { useGetPostsQuery } = apiSlice;
+export const { useGetPostsQuery, useGetPostQuery } = apiSlice;
