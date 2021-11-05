@@ -39,9 +39,15 @@ export const apiSlice = createApi({
             }),
             invalidatesTags: (result, error, arg) => [{ type: 'Post', id: arg.id }]
         }),
+        getUsers: builder.query({
+            query: () => '/users',
+        }),
     }),
 });
 
+// Normally you should stick with using the hooks, but here we're 
+        // going to work with the user data using just the RTK Query core 
+        // API so you can see how to use it.
 
 // Export the auto-generated hook for the 'getPost' query endpoint
 export const {
@@ -49,4 +55,5 @@ export const {
     useGetPostQuery,
     useAddNewPostMutation,
     useEditPostMutation,
+    useGetUsersQuery,
 } = apiSlice;

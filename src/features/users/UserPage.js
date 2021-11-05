@@ -10,6 +10,8 @@ export function UserPage({match}) {
 
     const user = useSelector(state => selectUserById(state, userId));
 
+    console.log(user);
+
     // const postsForUser = useSelector(state => {
     //     const allPosts = selectAllPosts(state);
     //     return allPosts.filter(post => post.user === userId);
