@@ -1,19 +1,26 @@
 import { createSlice, createSelector, createAsyncThunk, createEntityAdapter } from "@reduxjs/toolkit";
 import { apiSlice } from "../api/apiSlice";
 
+const usersAdapter = createEntityAdapter();
+const initialState = usersAdapter.getInitialState();
+
 export const extendedApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         getUsers: builder.query({
-            query: () => '/users'
+            query: () => '/users',
+            transformResponse: (responseData) => {
+                //  By calling usersAdapter.setAll(initialState, responseData), 
+                // it will return the standard {ids: [], entities: {}} normalized 
+                // data structure containing all of the received items.
+                return usersAdapter.setAll(initialState, responseData);
+            }
         })
     })
 })
 
 export const { useGetUsersQuery } = extendedApiSlice;
 
-// const usersAdapter = createEntityAdapter();
 
-// const initialState = usersAdapter.getInitialState();
 
 // Normally you should stick with using the hooks, but here we're 
 // going to work with the user data using just the RTK Query core 
@@ -32,18 +39,14 @@ export const { useGetUsersQuery } = extendedApiSlice;
 // for the new endpoints.)
 export const selectUsersResult = extendedApiSlice.endpoints.getUsers.select()
 
-const emptyUsers = []
+// const emptyUsers = []
 
-export const selectAllUsers = createSelector(
-    selectUsersResult,
-    usersResult => usersResult?.data ?? emptyUsers
-)
+// export const selectAllUsers = createSelector(
+//     selectUsersResult,
+//     usersResult => usersResult?.data ?? emptyUsers
+// )
 
-export const selectUserById = createSelector(
-    [selectAllUsers,
-        (state, userId) => userId],
-    (users, userId) => users.find(user => user.id === userId)
-)
+
 
 // export const fetchUsers = createAsyncThunk(
 //     'user/fetchUsers',
@@ -69,5 +72,21 @@ const userSlice = createSlice({
 //     selectAll: selectAllUsers,
 //     selectById: selectUserById,
 // } = usersAdapter.getSelectors(state => state.users);
+
+
+const selectUsersData = createSelector(
+    selectUsersResult,
+    usersResult => usersResult.data
+)
+
+export const {
+    selectAll: selectAllUsers,
+    selectById: selectUserById
+} = usersAdapter.getSelectors(state => selectUsersData(state) ?? initialState)
+
+// export const selectUserById = createSelector(
+//     [selectAllUsers, (state, userId) => userId],
+//     (users, userId) => users.find(user => user.id === userId)
+// )
 
 export default userSlice.reducer;
